@@ -6,6 +6,8 @@
 		#map {width:100%;height:100%;}
 	</style>
 
+	<script src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>
+
 	<script type="text/javascript">
 		function initGeolocation(){
 			if(navigator && navigator.geolocation) {
@@ -18,19 +20,24 @@
 		function errorCallback() {
 			console.log('There was an error getting current position.');
 		}
-
+		
 		function successCallback(position) {
-			var mapUrl = "http://maps.google.com/maps/api/staticmap?center=";
-			mapUrl = mapUrl + position.coords.latitude + ',' + position.coords.longitude;
-			mapUrl = mapUrl + '&zoom=15&size=512x512&maptype=roadmap&sensor=true';
-			var imgElement = document.getElementById("static-map");
-			imgElement.src = mapUrl;
+			var myLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+			var map_options = {
+				zoom: 15,
+				center: myLatLng,
+				mapTypeId: google.maps.MapTypeId.ROADMAP
+			}
+			map_container = document.getElementById('map');
+			var map = new google.maps.Map(map_container, map_options);
 		}
+
+		
 	</script>
 </head>
-<body>
+<body onload="javascript:initGeolocation()">
 	<div id="map">
-		<img id="static-map" src="placeholder.png" class="mfnotransform"/>
+	
 	</div>
 
 </body>
