@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Geolocation</title>
+	<style>
+		#map {width:100%;height:100%;}
+	</style>
+
+	<script type="text/javascript">
+		function initGeolocation(){
+			if(navigator && navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+			} else {
+				console.log('Geolocation is not supported.');
+			}
+		}
+	
+		function errorCallback() {
+			console.log('There was an error getting current position.');
+		}
+
+		function successCallback(position) {
+			var mapUrl = "http://maps.google.com/maps/api/staticmap?center=";
+			mapUrl = mapUrl + position.coords.latitude + ',' + position.coords.longitude;
+			mapUrl = mapUrl + '&zoom=15&size=512x512&maptype=roadmap&sensor=true';
+			var imgElement = document.getElementById("static-map");
+			imgElement.src = mapUrl;
+		}
+	</script>
+</head>
+<body>
+	<div id="map">
+		<img id="static-map" src="placeholder.png" class="mfnotransform"/>
+	</div>
+
+</body>
+</html>
